@@ -87,6 +87,21 @@
                             value="{{ old('nomor_bukti_setor', $arsip->nomor_bukti_setor) }}">
                     </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="nomor_ktp">NIK KTP (16 digit)</label>
+                            <input type="text" name="nomor_ktp" id="nomor_ktp" class="form-control {{ $errors->has('nomor_ktp') ? 'is-invalid' : '' }}"
+                                value="{{ old('nomor_ktp', $arsip->nomor_ktp) }}" maxlength="16" placeholder="Masukkan NIK KTP">
+                            @error('nomor_ktp') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nomor_npwp">Nomor NPWP</label>
+                            <input type="text" name="nomor_npwp" id="nomor_npwp" class="form-control {{ $errors->has('nomor_npwp') ? 'is-invalid' : '' }}"
+                                value="{{ old('nomor_npwp', $arsip->nomor_npwp) }}" maxlength="20" placeholder="Masukkan Nomor NPWP">
+                            @error('nomor_npwp') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label" for="keterangan">Keterangan</label>
                         <textarea name="keterangan" id="keterangan" class="form-control">{{ old('keterangan', $arsip->keterangan) }}</textarea>
@@ -98,12 +113,12 @@
                     @if($arsip->file_dokumen)
                     <div style="margin-bottom:12px;padding:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:8px;display:flex;align-items:center;gap:10px;">
                         <span>📄</span>
-                        <span style="font-size:13px;color:var(--green);">Dokumen sudah ada</span>
+                        <span style="font-size:13px;color:var(--green);">Dokumen Utama sudah ada</span>
                         <a href="{{ Storage::url($arsip->file_dokumen) }}" target="_blank" class="btn btn-secondary btn-sm" style="margin-left:auto;">Lihat</a>
                     </div>
                     @endif
                     <div class="form-group">
-                        <label class="form-label">Upload Dokumen Baru (opsional - akan mengganti yang lama)</label>
+                        <label class="form-label">Upload Dokumen Utama Baru (opsional - akan mengganti yang lama)</label>
                         <div class="file-upload-area" onclick="document.getElementById('file_dokumen').click()">
                             <input type="file" name="file_dokumen" id="file_dokumen" accept=".pdf,.jpg,.jpeg,.png" onchange="showFileName(this)">
                             <div id="upload-placeholder">
@@ -111,6 +126,38 @@
                                 <p>Klik untuk upload dokumen baru</p>
                             </div>
                             <div id="file-name" style="display:none;color:var(--accent);font-weight:600;"></div>
+                        </div>
+                    </div>
+
+                    {{-- Scan KTP --}}
+                    <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:15px;">
+                        @if($arsip->file_ktp)
+                        <div style="margin-bottom:12px;padding:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:8px;display:flex;align-items:center;gap:10px;">
+                            <span>📄</span>
+                            <span style="font-size:13px;color:var(--green);">Scan KTP sudah ada</span>
+                            <a href="{{ Storage::url($arsip->file_ktp) }}" target="_blank" class="btn btn-secondary btn-sm" style="margin-left:auto;">Lihat</a>
+                        </div>
+                        @endif
+                        <div class="form-group">
+                            <label class="form-label" for="file_ktp">Upload Scan KTP Baru (opsional)</label>
+                            <input type="file" name="file_ktp" id="file_ktp" class="form-control {{ $errors->has('file_ktp') ? 'is-invalid' : '' }}" accept=".pdf,.jpg,.jpeg,.png">
+                            @error('file_ktp') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    {{-- Scan NPWP --}}
+                    <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:15px;">
+                        @if($arsip->file_npwp)
+                        <div style="margin-bottom:12px;padding:12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:8px;display:flex;align-items:center;gap:10px;">
+                            <span>📄</span>
+                            <span style="font-size:13px;color:var(--green);">Scan NPWP sudah ada</span>
+                            <a href="{{ Storage::url($arsip->file_npwp) }}" target="_blank" class="btn btn-secondary btn-sm" style="margin-left:auto;">Lihat</a>
+                        </div>
+                        @endif
+                        <div class="form-group">
+                            <label class="form-label" for="file_npwp">Upload Scan NPWP Baru (opsional)</label>
+                            <input type="file" name="file_npwp" id="file_npwp" class="form-control {{ $errors->has('file_npwp') ? 'is-invalid' : '' }}" accept=".pdf,.jpg,.jpeg,.png">
+                            @error('file_npwp') <span class="invalid-feedback">{{ $message }}</span> @enderror
                         </div>
                     </div>
                 </div>

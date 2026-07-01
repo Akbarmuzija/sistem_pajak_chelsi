@@ -19,6 +19,10 @@ return new class extends Migration
             $table->date('tanggal_setor')->nullable();
             $table->string('nomor_bukti_setor')->nullable();
             $table->string('file_dokumen')->nullable();
+            $table->string('nomor_ktp', 16)->nullable();
+            $table->string('nomor_npwp', 20)->nullable();
+            $table->string('file_ktp')->nullable();
+            $table->string('file_npwp')->nullable();
             $table->text('keterangan')->nullable();
             $table->enum('status', ['draft', 'menunggu', 'disetujui', 'ditolak'])->default('draft');
             $table->text('catatan_pimpinan')->nullable();

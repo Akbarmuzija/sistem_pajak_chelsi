@@ -62,8 +62,12 @@ class ArsipPajakController extends Controller
             'jumlah_pajak'     => 'required|numeric|min:0',
             'tanggal_setor'    => 'nullable|date',
             'nomor_bukti_setor'=> 'nullable|string|max:100',
+            'nomor_ktp'        => 'nullable|string|size:16',
+            'nomor_npwp'       => 'nullable|string|max:20',
             'keterangan'       => 'nullable|string|max:500',
             'file_dokumen'     => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_ktp'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_npwp'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
         $validated['user_id']     = Auth::id();
@@ -72,6 +76,12 @@ class ArsipPajakController extends Controller
 
         if ($request->hasFile('file_dokumen')) {
             $validated['file_dokumen'] = $request->file('file_dokumen')->store('dokumen-pajak', 'public');
+        }
+        if ($request->hasFile('file_ktp')) {
+            $validated['file_ktp'] = $request->file('file_ktp')->store('dokumen-ktp', 'public');
+        }
+        if ($request->hasFile('file_npwp')) {
+            $validated['file_npwp'] = $request->file('file_npwp')->store('dokumen-npwp', 'public');
         }
 
         ArsipPajak::create($validated);
@@ -118,13 +128,25 @@ class ArsipPajakController extends Controller
             'jumlah_pajak'     => 'required|numeric|min:0',
             'tanggal_setor'    => 'nullable|date',
             'nomor_bukti_setor'=> 'nullable|string|max:100',
+            'nomor_ktp'        => 'nullable|string|size:16',
+            'nomor_npwp'       => 'nullable|string|max:20',
             'keterangan'       => 'nullable|string|max:500',
             'file_dokumen'     => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_ktp'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'file_npwp'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
         if ($request->hasFile('file_dokumen')) {
             if ($arsip->file_dokumen) Storage::disk('public')->delete($arsip->file_dokumen);
             $validated['file_dokumen'] = $request->file('file_dokumen')->store('dokumen-pajak', 'public');
+        }
+        if ($request->hasFile('file_ktp')) {
+            if ($arsip->file_ktp) Storage::disk('public')->delete($arsip->file_ktp);
+            $validated['file_ktp'] = $request->file('file_ktp')->store('dokumen-ktp', 'public');
+        }
+        if ($request->hasFile('file_npwp')) {
+            if ($arsip->file_npwp) Storage::disk('public')->delete($arsip->file_npwp);
+            $validated['file_npwp'] = $request->file('file_npwp')->store('dokumen-npwp', 'public');
         }
 
         $validated['status'] = 'draft';
@@ -141,6 +163,8 @@ class ArsipPajakController extends Controller
         }
 
         if ($arsip->file_dokumen) Storage::disk('public')->delete($arsip->file_dokumen);
+        if ($arsip->file_ktp) Storage::disk('public')->delete($arsip->file_ktp);
+        if ($arsip->file_npwp) Storage::disk('public')->delete($arsip->file_npwp);
         $arsip->delete();
 
         return redirect()->route('arsip.index')->with('success', 'Arsip berhasil dihapus.');

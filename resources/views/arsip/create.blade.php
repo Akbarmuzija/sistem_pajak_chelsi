@@ -82,6 +82,21 @@
                         </div>
                     </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="nomor_ktp">NIK KTP (16 digit)</label>
+                            <input type="text" name="nomor_ktp" id="nomor_ktp" class="form-control {{ $errors->has('nomor_ktp') ? 'is-invalid' : '' }}"
+                                value="{{ old('nomor_ktp') }}" maxlength="16" placeholder="Masukkan NIK KTP">
+                            @error('nomor_ktp') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nomor_npwp">Nomor NPWP</label>
+                            <input type="text" name="nomor_npwp" id="nomor_npwp" class="form-control {{ $errors->has('nomor_npwp') ? 'is-invalid' : '' }}"
+                                value="{{ old('nomor_npwp') }}" maxlength="20" placeholder="Masukkan Nomor NPWP">
+                            @error('nomor_npwp') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label" for="keterangan">Keterangan</label>
                         <textarea name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan tambahan...">{{ old('keterangan') }}</textarea>
@@ -91,7 +106,7 @@
                 <div class="form-section">
                     <div class="form-section-title">📎 Dokumen Pendukung</div>
                     <div class="form-group">
-                        <label class="form-label" for="file_dokumen">Upload Dokumen (PDF/Gambar, maks. 5MB)</label>
+                        <label class="form-label" for="file_dokumen">Upload Dokumen Utama (PDF/Gambar, maks. 5MB) <span style="color:var(--red)">*</span></label>
                         <div class="file-upload-area" id="file-drop-area" onclick="document.getElementById('file_dokumen').click()">
                             <input type="file" name="file_dokumen" id="file_dokumen" accept=".pdf,.jpg,.jpeg,.png" onchange="showFileName(this)">
                             <div id="upload-placeholder">
@@ -102,6 +117,19 @@
                             <div id="file-name" style="display:none;color:var(--accent);font-weight:600;"></div>
                         </div>
                         @error('file_dokumen') <span class="invalid-feedback" style="display:block;margin-top:6px;">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-row" style="margin-top:20px;">
+                        <div class="form-group">
+                            <label class="form-label" for="file_ktp">Upload Scan KTP (PDF/Gambar, maks. 5MB)</label>
+                            <input type="file" name="file_ktp" id="file_ktp" class="form-control {{ $errors->has('file_ktp') ? 'is-invalid' : '' }}" accept=".pdf,.jpg,.jpeg,.png">
+                            @error('file_ktp') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="file_npwp">Upload Scan NPWP (PDF/Gambar, maks. 5MB)</label>
+                            <input type="file" name="file_npwp" id="file_npwp" class="form-control {{ $errors->has('file_npwp') ? 'is-invalid' : '' }}" accept=".pdf,.jpg,.jpeg,.png">
+                            @error('file_npwp') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
                     </div>
                 </div>
             </div>

@@ -74,6 +74,14 @@
                         <div class="info-label">Nomor Bukti Setor</div>
                         <div class="info-value">{{ $arsip->nomor_bukti_setor ?: '-' }}</div>
                     </div>
+                    <div class="info-item">
+                        <div class="info-label">NIK KTP</div>
+                        <div class="info-value">{{ $arsip->nomor_ktp ?: '-' }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Nomor NPWP</div>
+                        <div class="info-value">{{ $arsip->nomor_npwp ?: '-' }}</div>
+                    </div>
                     <div class="info-item full">
                         <div class="info-label">Keterangan</div>
                         <div class="info-value">{{ $arsip->keterangan ?: '-' }}</div>
@@ -81,18 +89,48 @@
                 </div>
             </div>
 
-            @if($arsip->file_dokumen)
+            @if($arsip->file_dokumen || $arsip->file_ktp || $arsip->file_npwp)
             <div class="card">
                 <div class="card-title" style="margin-bottom:14px;"><div class="title-icon">📎</div> Dokumen Pendukung</div>
-                <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;">
-                    <div style="font-size:32px;">📄</div>
-                    <div>
-                        <div style="font-weight:600;">Dokumen Arsip</div>
-                        <div class="text-muted text-sm">{{ basename($arsip->file_dokumen) }}</div>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                    @if($arsip->file_dokumen)
+                    <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;">
+                        <div style="font-size:32px;">📄</div>
+                        <div>
+                            <div style="font-weight:600;">Dokumen Utama Arsip</div>
+                            <div class="text-muted text-sm">{{ basename($arsip->file_dokumen) }}</div>
+                        </div>
+                        <a href="{{ Storage::url($arsip->file_dokumen) }}" target="_blank" class="btn btn-info btn-sm" style="margin-left:auto;">
+                            👁️ Lihat Dokumen
+                        </a>
                     </div>
-                    <a href="{{ Storage::url($arsip->file_dokumen) }}" target="_blank" class="btn btn-info btn-sm" style="margin-left:auto;">
-                        👁️ Lihat Dokumen
-                    </a>
+                    @endif
+
+                    @if($arsip->file_ktp)
+                    <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;">
+                        <div style="font-size:32px;">🪪</div>
+                        <div>
+                            <div style="font-weight:600;">Scan KTP</div>
+                            <div class="text-muted text-sm">{{ basename($arsip->file_ktp) }}</div>
+                        </div>
+                        <a href="{{ Storage::url($arsip->file_ktp) }}" target="_blank" class="btn btn-info btn-sm" style="margin-left:auto;">
+                            👁️ Lihat KTP
+                        </a>
+                    </div>
+                    @endif
+
+                    @if($arsip->file_npwp)
+                    <div style="display:flex;align-items:center;gap:14px;padding:14px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:10px;">
+                        <div style="font-size:32px;">💳</div>
+                        <div>
+                            <div style="font-weight:600;">Scan NPWP</div>
+                            <div class="text-muted text-sm">{{ basename($arsip->file_npwp) }}</div>
+                        </div>
+                        <a href="{{ Storage::url($arsip->file_npwp) }}" target="_blank" class="btn btn-info btn-sm" style="margin-left:auto;">
+                            👁️ Lihat NPWP
+                        </a>
+                    </div>
+                    @endif
                 </div>
             </div>
             @endif
